@@ -30,7 +30,9 @@ node {
     }
 }
 
-    /*stage('Manual Approval') {
+/*}
+
+    stage('Manual Approval') {
         input {
             message 'Lanjutkan ke tahap Deploy?'
             ok 'Proceed'
