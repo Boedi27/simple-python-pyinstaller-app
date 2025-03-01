@@ -13,22 +13,21 @@ node {
     }
 
     stage('Manual Approval') {
-        steps {
-            script {
-                def userInput = input(message: 'Lanjutkan ke tahap Deploy?', ok: 'Proceed', parameters: [choice(name: 'Approval', choices: ['Proceed', 'Abort'], description: 'Pilih apakah ingin melanjutkan atau menghentikan pipeline.')])
-                if (userInput == 'Abort') {
-                    error('Pipeline dihentikan oleh pengguna.')
-                }
+        script {
+            def userInput = input(message: 'Lanjutkan ke tahap Deploy?', ok: 'Proceed', 
+                parameters: [choice(name: 'Approval', choices: ['Proceed', 'Abort'], 
+                description: 'Pilih apakah ingin melanjutkan atau menghentikan pipeline.')])
+            if (userInput == 'Abort') {
+                error('Pipeline dihentikan oleh pengguna.')
             }
         }
     }
 
     stage('Deploy') {
-        steps {
-            echo 'Melanjutkan ke tahap Deploy...'
-        }
+        echo 'Melanjutkan ke tahap Deploy...'
     }
 }
+
 
 /*}
 
