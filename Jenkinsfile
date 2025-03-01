@@ -12,7 +12,7 @@ node {
         step([$class: 'JUnitResultArchiver', testResults: 'test-reports/results.xml'])
     }
 
-stage('Manual Approval') {
+    stage('Manual Approval') {
         steps {
             script {
                 def userInput = input(message: 'Lanjutkan ke tahap Deploy?', ok: 'Proceed', parameters: [choice(name: 'Approval', choices: ['Proceed', 'Abort'], description: 'Pilih apakah ingin melanjutkan atau menghentikan pipeline.')])
