@@ -14,21 +14,19 @@ node {
 
     stage('Manual Approval') {
         script {
-            def userInput = input(
-                message: 'Lanjutkan ke tahap Deploy?',
-                ok: 'Proceed',       // Tombol hijau
-                submitterParameter: 'approval', // Hasil input
-                parameters: []       // Kosong biar cuma tombol saja
-            )
-
-            if (userInput == 'Abort') {
+            try {
+                input(
+                    message: 'Lanjutkan ke tahap Deploy?',
+                    ok: 'Proceed',     // Tombol hijau
+                    submitter: 'Abort' // Tombol merah
+                )
+                echo 'User melanjutkan pipeline dengan tombol Proceed'
+            } catch (err) {
                 echo 'Pipeline dihentikan oleh pengguna.'
                 currentBuild.result = 'ABORTED' // Pipeline diabort tanpa error
-                return // Keluar dari pipeline secara normal
+                return // Keluar dari pipeline dengan status ABORTED
             }
         }
-
-        echo 'User melanjutkan pipeline dengan tombol Proceed'
     }
 
     stage('Deploy') {
