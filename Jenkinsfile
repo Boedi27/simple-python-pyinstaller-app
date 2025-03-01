@@ -14,13 +14,21 @@ node {
 
     stage('Manual Approval') {
         script {
-            def userInput = input(message: 'Lanjutkan ke tahap Deploy?', ok: 'Proceed', 
-                parameters: [choice(name: 'Approval', choices: ['Proceed', 'Abort'], 
-                description: 'Pilih apakah ingin melanjutkan atau menghentikan pipeline.')])
+            def userInput = input(
+                message: 'Lanjutkan ke tahap Deploy?',
+                ok: 'Proceed',       // Tombol hijau
+                submitterParameter: 'approval', // Hasil input
+                parameters: []       // Kosong biar cuma tombol saja
+            )
+
             if (userInput == 'Abort') {
-                error('Pipeline dihentikan oleh pengguna.')
+                echo 'Pipeline dihentikan oleh pengguna.'
+                currentBuild.result = 'ABORTED' // Pipeline diabort tanpa error
+                return // Keluar dari pipeline secara normal
             }
         }
+
+        echo 'User melanjutkan pipeline dengan tombol Proceed'
     }
 
     stage('Deploy') {
