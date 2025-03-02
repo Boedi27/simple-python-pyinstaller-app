@@ -27,7 +27,6 @@ node {
                 return // Keluar dari pipeline secara normal
             }
         }
-
         echo 'User melanjutkan pipeline dengan tombol Proceed'
     }
 
@@ -37,24 +36,41 @@ node {
 }
 
 
+/*
+stage('Manual Approval') {
+        script {
+            def userInput = input(
+                message: 'Lanjutkan ke tahap Deploy?',
+                ok: 'Proceed',       // Tombol hijau
+                submitterParameter: 'approval', // Hasil input
+                parameters: []       // Kosong biar cuma tombol saja
+            )
+
+            if (userInput == 'Abort') {
+                echo 'Pipeline dihentikan oleh pengguna.'
+                currentBuild.result = 'ABORTED' // Pipeline diabort tanpa error
+                return // Keluar dari pipeline secara normal
+            }
+        }
+
+        echo 'User melanjutkan pipeline dengan tombol Proceed'
+    }
+*/
+
 /*}
 
     stage('Manual Approval') {
-        input {
-            message 'Lanjutkan ke tahap Deploy?'
-            ok 'Proceed'
-            parameters {
-                choice(name: 'Approval', choices: ['Proceed', 'Abort'], description: 'Pilih apakah ingin melanjutkan atau menghentikan pipeline.')
+        script {
+            def userInput = input(message: 'Lanjutkan ke tahap Deploy?', ok: 'Proceed', 
+                parameters: [choice(name: 'Approval', choices: ['Proceed', 'Abort'], 
+                description: 'Pilih apakah ingin melanjutkan atau menghentikan pipeline.')])
+            if (userInput == 'Abort') {
+                error('Pipeline dihentikan oleh pengguna.')
             }
         }
     }
 
     stage('Deploy') {
-        when {
-            expression { params.Approval == 'Proceed' }
-        }
-        steps {
-            echo 'Melanjutkan ke tahap Deploy...'
-        }
+        echo 'Melanjutkan ke tahap Deploy...'
     }
 }*/
