@@ -32,6 +32,9 @@ node {
 
     stage('Deploy') {
         echo 'Melanjutkan ke tahap Deploy...'
+        sh 'echo "Aplikasi berjalan selama 1 menit..."'
+        sleep(time: 1, unit: 'MINUTES') // Menjeda eksekusi selama 1 menit
+        echo 'Aplikasi selesai berjalan setelah 1 menit.'
     }
 }
 
